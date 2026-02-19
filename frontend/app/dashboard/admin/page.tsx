@@ -21,9 +21,10 @@ export default function AdminPage() {
       try {
         const response = await apiClient.get('/admin');
         setMessage(response.data.message);
-      } catch (error: any) {
+      } catch (error) {
+        const err = error as { response?: { status?: number } };
         console.error('Error fetching admin data:', error);
-        if (error.response?.status === 403) {
+        if (err.response?.status === 403) {
           router.push('/dashboard');
         }
       } finally {
